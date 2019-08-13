@@ -13,7 +13,7 @@ class CreateIncomeTable extends Migration
      */
     public function up()
     {
-        Schema::create('Income', function (Blueprint $table) {
+        Schema::create('income', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
             $table->timestamps();

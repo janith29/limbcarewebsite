@@ -10,7 +10,7 @@ class Doctor extends Model
     protected $table='doctors';
     protected $primarykey='id';
     protected $fillable=[
-        'id', 'name', 'email', 'hospital' ,'password', 'mobile',  'doc_pic'
+        'id','Did', 'name', 'email', 'hospital' , 'mobile',  'doc_pic'
 
 ];
 }

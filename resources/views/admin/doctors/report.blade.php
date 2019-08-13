@@ -1,54 +1,20 @@
 @extends('admin.layouts.admin')
 <head>
-    <script src="https://raw.githubusercontent.com/nnnick/Chart.js/master/dist/Chart.bundle.js"></script>
-    <script>
-        var year = ['2013','2014','2015', '2016'];
-        var data_click = <?php echo $click; ?>;
-        var data_viewer = <?php echo $viewer; ?>;
 
-
-        var barChartData = {
-            labels: Month,
-            datasets: [{
-                label: 'Click',
-                backgroundColor: "rgba(220,220,220,0.5)",
-                data: data_click
-            }, {
-                label: 'View',
-                backgroundColor: "rgba(151,187,205,0.5)",
-                data: data_viewer
-            }]
-        };
-
-
-        window.onload = function() {
-            var ctx = document.getElementById("canvas").getContext("2d");
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    elements: {
-                        rectangle: {
-                            borderWidth: 2,
-                            borderColor: 'rgb(0, 255, 0)',
-                            borderSkipped: 'bottom'
-                        }
-                    },
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: 'Yearly Website Visitor'
-                    }
-                }
-            });
-
-
-        };
-    </script>
 </head>
 @section('title',"Doctor Report Generate ", "Doctor")
 <body>
 @section('content')
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-users"></i>Total Doctors</span>
+            <div class="count green">{{ $counts['Doctors'] }}</div>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-users"></i>Total Hospitals </span>
+            <div class="count green">{{ $counts['hospital'] }}</div>
+        </div>
+    </div>
     <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <h1>Period Report Genarate</h1>
         <form action="report" method="post">
@@ -73,22 +39,22 @@
 
         </form>
 
-<h1>Bar chart Of Doctors</h1>
+{{--<h1>Bar chart Of Doctors</h1>--}}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Dashboard</div>
-                        <div class="panel-body">
-                            <canvas id="canvas" height="280" width="600"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
+        {{--<div class="container">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-md-10 col-md-offset-1">--}}
+                    {{--<div class="panel panel-default">--}}
+                        {{--<div class="panel-heading">Dashboard</div>--}}
+                        {{--<div class="panel-body">--}}
+                            {{--<canvas id="canvas" height="280" width="600"></canvas>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+        {{----}}
+    {{--</div>--}}
 </body>
 @endsection
 

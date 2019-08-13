@@ -8,8 +8,16 @@
             <tbody>
             <tr>
                 <th>{{ __('views.admin.users.show.table_header_0') }}</th>
-                <td><img src="\image\emp\profile\{{ $employee->emp_pic }}"  alt="Pic" height="90" width="90" class="user-profile-image "></td>
-                {{-- {{ $employee->avatar }} --}}
+               
+                {{-- hhh<img src="\image\emp\profile\{{ $employee->emp_pic }}"  alt="Pic" height="90" width="90" class="user-profile-image "> </td>--}}
+                <img  id="myImg" onclick="displayIMG(this.id)"  src="\image\emp\profile\{{ $employee->emp_pic }}" alt={{ $employee->name }} style="width:100%;max-width:200px">{{-- {{ $employee->avatar }} --}}
+                <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                    <img class="modal-content" id="img01">
+                    <div id="caption"></div>
+                  </div>
+                  
+                  
             </tr>
 
             <tr>
@@ -84,4 +92,27 @@
             </tbody>
         </table>
     </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        // var img=document.getElementById("myImg");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+       
+          function displayIMG(clicked_id)
+        {
+            modal.style.display = "block";
+            modalImg.src = document.getElementById(clicked_id).src;
+            captionText.innerHTML =document.getElementById(clicked_id).alt;
+        }  
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() { 
+            modal.style.display = "none";
+        }
+        </script>
+        
 @endsection

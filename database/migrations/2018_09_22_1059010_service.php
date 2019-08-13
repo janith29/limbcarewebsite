@@ -15,6 +15,7 @@ class Service extends Migration
     {
         Schema::create('service', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('Did');
             $table->string('pic');
             $table->string('serviceName');
             $table->text('description');

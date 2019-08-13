@@ -10,6 +10,6 @@ class Invoice extends Model
 
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'amount','remaining_amount','patient_ID'
+        'id','Did', 'amount','remaining_amount','patient_ID','service'
     ];
 }

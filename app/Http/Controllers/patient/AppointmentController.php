@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\Role\Role;
 use DB;
 
+use Carbon\Carbon;
+use App\Models\Notification;
+use Validator;
 class AppointmentController extends Controller
 {
     /**
@@ -17,8 +20,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::all();
-        return view('patient.appointments.index', compact('appointments'));
+        
+        return view('patient.appointments.index');
     }
 
     /**
@@ -39,13 +42,11 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validatedData = [
             'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u|max:255',
             'type' => 'required',
             'date' => 'required|date_format:Y-m-d|after:today',
-            //'time' => 'required|after:now',
-            // 'time_start' => 'date_format:date',
-            // 'required|date_format:H:i|after:time_start',
             'time' => 'required',
         ];
 
@@ -54,21 +55,49 @@ class AppointmentController extends Controller
             'date.after' => 'Appointment Date can not be today, tomorrow onward',
             'time.after' => 'Appointment Time cannot be now or past'
         ];
-
         $this->validate($request, $validatedData, $customMessages);
+        $did=null;
+        $lastid = 0;
+        $appointments = DB::select('select * from appointments ORDER BY id DESC LIMIT 1');
+        foreach($appointments as $appointment)
+        {
+            $lastid=$appointment->id;
+            $did=$appointment->Did;
+        }
+        if($lastid==0)
+         {
+             $did="APP000";
+         }
+         $lastDid=substr($did,3);
+         $lastDid=$lastDid+1;
+         $lastDid=str_pad($lastDid,4,"0",STR_PAD_LEFT);
+         $did="APP".$lastDid;
+        if(\Auth::check()) {
         
-        // $count = DB::table('appointments')->where('id', $request->id)
-        //                         ->count();
-        // $message = "";
-        // if($count > 0){
-        //     $message = 'Appointment id exist';
-        // }else{
-        //     Appointment::create($request->all());
-        //     return redirect()->route('admin.appointments')->with('message', 'Appointment added successfully!');
-        // }
+            Appointment::create([
+                'Did'=>$did,
+                'name'=>$request->get('name'),
+                'date'=>$request->get('date'),
+                'time'=>$request->get('time'),
+                'type'=>$request->get('type'),
+                'applicant'=>\Auth::user()->id
+                
+            ]);
+            
+            //add notification to display on employees
+            Notification::create([
+                'user_type' => \Auth::user()->usertype,
+                'user_id' => \Auth::user()->id,
+                'message' => 'Appointment is requested by ' . \Auth::user()->name,
+                'header' => 'New appointment Request',
+                'status' => 'unread',
+                'action' => 'pending',
+                'date' => Carbon::now()->format('Y.m.d'),
+                'time' => Carbon::now()->format('H.i')
+            ]);
+        }
 
-        Appointment::create($request->all());
-            return redirect()->route('patient.appointments')->with('message', 'Appointment added successfully!');
+        return redirect()->route('patient.appointments')->with('message', 'Appointment added successfully!');
     }
 
     /**
@@ -92,7 +121,29 @@ class AppointmentController extends Controller
     {
         return view('patient.appointments.edit', ['appointment' => $appointment, 'roles' => Role::get()]);
     }
+    public function checkDate(Request $request)
+    {
+        //check for duplicate
+        $count = DB::table('appointments')->where('date', $request->date)->count();
+        $allocateValidateMessage ='This day('.$request->date.') do not have available time slots to allocate, 
+        please allocate another day! ';
+        Validator::extend('checkDateSlot', function ($attribute, $value, $parameters, $validator) {
+            return $parameters[0] !== "13";
+        }, $allocateValidateMessage);
 
+        $validatedData = [
+            'date' => "required|date_format:Y-m-d|after:today|checkDateSlot:{$count}",
+        ];
+
+        $customMessages = [
+            'date.after' => 'Appointment Date can not be today, tomorrow onward',
+        ];
+
+        $this->validate($request, $validatedData, $customMessages);
+
+        $appointments = Appointment::where('date', $request->date)->pluck('time');
+        return view('patient.appointments.add')->with(['message' => 13 - $count . 'time slots are available.', 'appointments' => $appointments]);
+    }
     /**
      * Update the specified resource in storage.
      *

@@ -7,24 +7,34 @@
         <div class="col-8 col-md-4" style="padding-bottom: 15px;">
             <div class="topicbar">
                 <a href="{{ route('admin.diagnosis.indexadd') }}" class="btn btn-primary">Add diagnosis card</a>
-                
+                <a href="{{ route('admin.diagnosis.DiaReport') }}" class="btn btn-primary">Diagnosis Report</a>
+
             </div>
             <div class="right-searchbar">
-                <!-- Search form -->
-                <form action="searchdiagnosis" method="post" class="form-inline active-cyan-3">
-                        {{ csrf_field() }}
-                        <input type="text" placeholder="Search diagnosis" name="search" class="form-control form-control-sm ml-3 w-100" required>
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <!-- Search form -->
+                    <form action="searchdiagnosis" method="post" class="form-inline">
+                            {{ csrf_field() }}
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="search" placeholder="Search diagnosis" aria-label="Search" required />
+                        </div>
+                        <br>
+                       <br>
+                        <div class="form-group">
+                            <button class="btn btn-primary" style="margin-top: -10px;" type="submit">Search</button>
+                        </div>
+                        {{-- <i class="fa fa-search" aria-hidden="true"></i> --}}
                     </form>
-            </div>
+                </div>
+           
         </div>
     </div>
+
     <div class="row">
                 <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                         width="100%">
                     <thead> 
                     <tr>
-                        <th>ID</th>
+                        <th>DID</th>
                         <th>Patient name</th>
                         <th>Service</th>
                         <th>Doctor name</th>
@@ -34,7 +44,7 @@
                     <tbody>
                     @foreach($diagnosise as $diagnosis)
                         <tr> 
-                            <td>{{ $diagnosis->id }}</td>
+                            <td>{{ $diagnosis->Did }}</td>
                             <td>{{ $diagnosis->patientname }}</td>
                             <td>{{ $diagnosis->service }}</td>
                             <td>{{ $diagnosis->consultant_dr }}</td>

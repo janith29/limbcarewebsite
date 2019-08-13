@@ -4,60 +4,146 @@
         <div class="col-12 col-md-8">
         @section('title', "Service Management")
         </div>
-        <div class="col-8 col-md-4" style="padding-bottom: 15px;">
-            
-            <div class="right-searchbar">
-                <form action="searchservice" method="post" class="form-inline active-cyan-3">
-                        {{ csrf_field() }}
-                        <input type="text" placeholder="Search service" name="search" required>
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-        </div>
+        
     </div>
-    @php
-use Illuminate\Support\Facades\DB;
-$email=auth()->user()->email;
-
-$IDs = DB::table('patient')->where('email', $email)->get();
-$IDpa = 0;
-foreach($IDs as $ID)
-{
-$IDpa=$ID->id;
-
-}
-// $services = DB::select('select * from service ');
-//
-
-@endphp
     <div class="row">
-        
-        @foreach($services as $service)
-            <div class="col-xs-6 col-sm-3">
-                <div class="card">
-                    <div class="row">
-                        <div class="card-header" style="margin-top: 20px; margin-bottom: 20px;">
-                            <div class="col-xs-6 col-md-4 col-lg-4 vcenter emp-avator" style="height: 90px; width: 90px;" >
-                                <img src="\image\service\item\{{ $service->pic }}" alt="Pic" height="90px" width="90px">
-                            </div>
-                            {{-- <span class="card-img">{{ HTML::image('img/nickfrost.jpg', 'Pic') }}</span> --}}
-                            <div class="col-xs-6 col-md-8 col-lg-8 vcenter emp-details">
-                                <span class="text-primary bg-primary">Service name </span><br />
-                                <span class="text-light bg-success">{{ $service->serviceName }}</span><br />
-                                <span class="text-primary bg-primary">Service type</span><br />
-                                <span class="text-light bg-success">{{ $service->type }}</span><br />
-                                <span class="text-light bg-primary"> Service description</span><br />
-                
-                                <span class="text-light bg-success">{{ $service->description }}</span>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    
+        @if ($services->isEmpty())
+        <div class="alert alert-danger" role="alert">
+                <p>Not have Data in service table</p>
+        </div>
+        @else
+        <div class="container">
+                <br>
+                <div class="col-12 panel panel-primary">
+                            
+                    {{-- <div class="panel-body"><p style="text-align:center;"><img src="img/core-img/artificial.png" class="center" width="800" height="420"></p></div> --}}
+                    <div class="panel-heading"><p style="text-align:center;"> <img src="\img\icons\orthosis.png" width="75px" height="75px"></p><h4 align="center">Orthosis care</h4>
                 </div>
-            </div>
+                </div>
+        @foreach($services as $service)
+
+        @if (($service->type)==="orthosis")
+        <div class="col-12 col-sm-4 col-md-3 col-lg-3 text-center">
+                <div class="panel panel-success ">
+                    <div class="panel-heading " style="text-align: justify;">
+                            <p style="text-align:center;">  
+                                <img class="imgdis" id={{ $service->id }} onclick="displayIMG(this.id)"  src="\image\service\item\{{ $service->pic }}" alt="Snow" style="height:auto;width:auto;max-width:200px;max-height:200px;"></p>
+                            <h4 align="center">{{ $service->serviceName }}</h4></div>
+                      <p >{{ $service->description }}</p>
+                      
+                        
+                        
+                </div>
+              </div>
             
+            @endif
         @endforeach
-        
     </div>
+    
+<div class="container">
+        <br>
+        <div class="col-12 panel panel-primary">
+                    
+            {{-- <div class="panel-body"><p style="text-align:center;"><img src="img/core-img/artificial.png" class="center" width="800" height="420"></p></div> --}}
+            <div class="panel-heading"><p style="text-align:center;">
+                 <img src="\img\icons\pedestrian-walking.png" width="75px" height="75px"></p><h4 align="center">Prosthesis care</h4>
+        </div>
+        </div>
+@foreach($services as $service)
+
+@if (($service->type)==="prosthesis")
+<div class="col-12 col-sm-4 col-md-3 col-lg-3 text-center">
+        <div class="panel panel-success ">
+            <div class="panel-heading " style="text-align: justify;">
+                    <p style="text-align:center;"> 
+                         <img class="imgdis" id={{ $service->id }} onclick="displayIMG(this.id)"  src="\image\service\item\{{ $service->pic }}" alt="Snow" style="height:auto;width:auto;max-width:200px;max-height:200px;"></p>
+                    <h4 align="center">{{ $service->serviceName }}</h4></div>
+              <p >{{ $service->description }}</p>
+              
+        </div>
+      </div>
+    
+    @endif
+@endforeach
+</div>
+<div class="container">
+        <br>
+        <div class="col-12 panel panel-primary">
+                    
+            {{-- <div class="panel-body"><p style="text-align:center;"><img src="img/core-img/artificial.png" class="center" width="800" height="420"></p></div> --}}
+            <div class="panel-heading"><p style="text-align:center;"> <img src="\img\icons\nose.png" width="75px" height="75px"></p><h4 align="center">Cosmetic solutions care</h4>
+        </div>
+        </div>
+@foreach($services as $service)
+
+@if (($service->type)==="cosmetic")
+<div class="col-12 col-sm-4 col-md-3 col-lg-3 text-center">
+        <div class="panel panel-success ">
+            <div class="panel-heading " style="text-align: justify;">
+                    <p style="text-align:center;">  
+                        <img class="imgdis" id={{ $service->id }} onclick="displayIMG(this.id)"  src="\image\service\item\{{ $service->pic }}" alt="Snow" style="height:auto;width:auto;max-width:200px;max-height:200px;"></p>
+                    <h4 align="center">{{ $service->serviceName }}</h4></div>
+              <p >{{ $service->description }}</p>
+             
+        </div>
+      </div>
+    
+    @endif
+@endforeach
+</div>
+<div class="container">
+        <br>
+        <div class="col-12 panel panel-primary">
+                    
+            {{-- <div class="panel-body"><p style="text-align:center;"><img src="img/core-img/artificial.png" class="center" width="800" height="420"></p></div> --}}
+            <div class="panel-heading"><p style="text-align:center;"> <img src="\img\icons\chaild.png" width="75px" height="75px"></p><h4 align="center">Children care</h4>
+        </div>
+        </div>
+@foreach($services as $service)
+
+@if (($service->type)==="children")
+<div class="col-12 col-sm-4 col-md-3 col-lg-3 text-center">
+        <div class="panel panel-success ">
+            <div class="panel-heading " style="text-align: justify;">
+                    <p style="text-align:center;"> 
+                         <img class="imgdis" id={{ $service->id }} onclick="displayIMG(this.id)"  src="\image\service\item\{{ $service->pic }}" alt="Snow" style="height:auto;width:auto;max-width:200px;max-height:200px;"></p>
+                    <h4 align="center">{{ $service->serviceName }}</h4></div>
+              <p >{{ $service->description }}</p>
+              
+        </div>
+      </div>
+    
+    @endif
+@endforeach
+</div>
+        @endif
+    
+    </div>
+    <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+      </div>
+    <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+            // var img=document.getElementById("myImg");
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+           
+              function displayIMG(clicked_id)
+            {
+                modal.style.display = "block";
+                modalImg.src = document.getElementById(clicked_id).src;
+                captionText.innerHTML =document.getElementById(clicked_id).alt;
+            }  
+            
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() { 
+                modal.style.display = "none";
+            }
+            </script>
 @endsection

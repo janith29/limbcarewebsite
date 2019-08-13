@@ -19,6 +19,11 @@
                                 <i class="fa fa-sign-out pull-right"></i> {{ __('views.backend.section.header.menu_0') }}
                             </a>
                         </li>
+                        <li>
+                                <a href="{{ route('/') }}">
+                                    <i class="fa fa-home pull-right"></i> Home
+                                </a>
+                            </li>
                     </ul>
                 </li>
             </ul>

@@ -15,6 +15,7 @@ class CreateBillPaymentTable extends Migration
     {
         Schema::create('bill', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('Did');
             $table->string('invoice_id');
             $table->string('empid');
             $table->integer('amount');

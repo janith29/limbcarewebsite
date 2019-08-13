@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Income extends Model
 {
-    protected $table = 'Income';
+    protected $table = 'income';
 
     protected $primaryKey = 'id';
     protected $fillable = [

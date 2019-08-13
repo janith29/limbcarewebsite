@@ -32,7 +32,11 @@ class DashboardController extends Controller
     {
         $counts = [
             'users' => \DB::table('users')->count(),
+            'employees' => \DB::table('employees')->count(),
+            'patient' => \DB::table('patient')->count(),
+            'question' => \DB::table('question')->count(),
             'users_unconfirmed' => \DB::table('users')->where('confirmed', false)->count(),
+            'appointments' => \DB::table('appointments')->where('date', Carbon::today())->count(),
             'users_inactive' => \DB::table('users')->where('active', false)->count(),
             'protected_pages' => 0,
             'doctor' => \DB::table('doctors')->count(),

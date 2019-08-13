@@ -33,7 +33,7 @@
                 width="100%">
             <thead> 
             <tr>
-                <th>@sortablelink('id', "ID",['page' => ''])</th>
+                <th>@sortablelink('Did', "DID",['page' => ''])</th>
                 <th>@sortablelink('date', "Date",['page' => ''])</th>
                 <th>@sortablelink('time', "Time",['page' => ''])</th>
                 <th>@sortablelink('name', "Name",['page' => ''])</th>
@@ -44,7 +44,7 @@
             <tbody>
                 @foreach ($appointments as $appointment)
                     <tr>
-                        <td>{{ $appointment->id }}</td>
+                        <td>{{ $appointment->Did }}</td>
                         <td>{{ $appointment->date }}</td>
                         <td>{{ $appointment->time }}</td>
                         <td>{{ $appointment->name }}</td>

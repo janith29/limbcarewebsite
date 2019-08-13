@@ -25,7 +25,6 @@ class DiagnosisVal extends FormRequest
     {
         
         return [
-            'pa_name'=>'required|max:191',
             'pa_service'=>'required|max:191'
             ,'pa_height'=>'required|integer|min:0'
             ,'pa_weight'=>'required|integer|min:0'
@@ -39,7 +38,6 @@ class DiagnosisVal extends FormRequest
     {
         $de="'";
         return[
-            'pa_name.required'=>'Patient name must be insert!',
             'pa_service.required'=>'Patient'.$de.'s Service must be insert!',
             'pa_height.required'=>'Patient'.$de.'s height must be insert!',
             'pa_weight.required'=>'Patient'.$de.'s weight must be insert!',

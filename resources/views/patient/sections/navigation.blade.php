@@ -2,7 +2,7 @@
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
             <a href="{{ route('patient.dashboard') }}" class="site_title">
-                <span>{{ config('app.name') }}</span>
+                <span>Artificial limb care </span>
             </a>
         </div>
 
@@ -93,6 +93,13 @@
                             {{ "Question Forum" }}
                         </a>
                     </li>
+                    <li class="@if (Request::is('patient/financial')) active @endif">
+                        <a href="{{ route('patient.financial') }}">
+                            <i class="fa fa-money" aria-hidden="true"></i>
+                            {{ "Financial" }}
+                        </a>
+                    </li>
+                    
                 </ul>
             </div>
         </div>

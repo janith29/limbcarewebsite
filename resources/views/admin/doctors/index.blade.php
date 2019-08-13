@@ -4,27 +4,35 @@
 
 @section('content')
     <div class="row">
-        <table border="0" cellspacing="0" width="100%" class="doctortable">
-            <table>
+            <div class="col-12">
+        <table  class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%" border="0">
+           
                 <tr>
 
-                    <th>Actions</th>
+                    
                     <div class="demptable">
                         <a href="{{ route('admin.doctors.add') }}" class="btn btn-primary">Add Doctor</a>
                         <a href="{{ route('admin.doctors.report') }}" class="btn btn-primary">Report</a>
-                        <form action="doctorsearch" method="post" role="search">
-                            {{ csrf_field() }}
-
-                            <input type="text" placeholder="Search Doctor" name="q">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-
+                        <div class="right-searchbar">
+                                <!-- Search form -->
+                                <form action="doctorsearch" method="post" class="form-inline">
+                                        {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="q" placeholder="Search Doctor" aria-label="Search" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" style="margin-top: -10px;" type="submit">Search</button>
+                                    </div>
+                                    {{-- <i class="fa fa-search" aria-hidden="true"></i> --}}
+                                </form>
+                            </div>
                     </div>
 
                 </tr>
             </table>
             <br/>
             <br/>
+        </div>
             <div class="row">
                 @if(Session::has('message'))
                     <div class="alert alert-success">{{ Session::get('message') }}</div>

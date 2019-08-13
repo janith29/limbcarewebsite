@@ -24,10 +24,7 @@
                 <label for="inputAddress">Hospital</label>
                 <input type="text" name="hospital" class="form-control" id="inputAddress" value="{{ $doctor->hospital }}">
             </div>
-            <div class="form-group">
-                <label for="inputAddress">E-mail</label>
-                <input type="email" name="email" class="form-control" id="inputAddress" value="{{ $doctor->email }}">
-            </div>
+            
 
             <div class="form-group">
                 <label for="inputAddress">Mobile Number</label>

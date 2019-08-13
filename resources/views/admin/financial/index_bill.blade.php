@@ -11,13 +11,21 @@
                 <a href="{{ route('admin.financial') }}" class="btn btn-danger">Back to Financial </a>
             </div>
             <div class="right-searchbar">
-                <!-- Search form -->
-                <form action="searchbill" method="post" class="form-inline active-cyan-3">
-                        {{ csrf_field() }}
-                        <input type="text" placeholder="Search Bill" name="search" class="form-control form-control-sm ml-3 w-100" required>
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <!-- Search form -->
+                    <form action="searchbill" method="post" class="form-inline">
+                            {{ csrf_field() }}
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="search" placeholder="Search Bill" aria-label="Search" required />
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <button class="btn btn-primary" style="margin-top: -10px;" type="submit">Search</button>
+                        </div>
+                        {{-- <i class="fa fa-search" aria-hidden="true"></i> --}}
                     </form>
-            </div>
+                </div>
+            
         </div>
     </div>
     <div class="row">
@@ -44,8 +52,11 @@
                                 $amont='no';
                                 foreach ($Invoices as $Invoice)
                                 {
+                                    if( $bill->invoice_id==$Invoice->id)
+                                    {
                                     $amont= $Invoice->amount;
                                     $reamont= $bill->amount;
+                                    }
                                 }
                                 @endphp
                             <td>{{ $bill->id }}</td>

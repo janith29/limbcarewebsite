@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DiagnosisVal;
 use App\Http\Requests\DiagnosisValUpdate;
 use App\Models\Patient;
+use PdfReport;
+
 
 class DiagnosisController extends Controller
 {
@@ -157,5 +159,49 @@ class DiagnosisController extends Controller
 
         return view('admin.diagnosis.index', compact('diagnosise'));
 
+    }
+
+    public function report()
+    {
+     return view('admin.diagnosis.DiaReport');
+    }
+    public function DiaReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $sortBy = $request->input('sort_by');
+
+        $title = 'Diagnosis Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+            'Sort By' => $sortBy
+        ];
+
+        $queryBuilder = diagnosis::select(['id','patientname','hight', 'weight','description']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+            'Date ' =>'created_at', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
+
+            'Patient Name' => 'patientname',
+            'Height' => 'hight',
+            'Weight' => 'weight',
+
+            'Description' => 'description',
+
+
+
+        ];
+
+        // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+
+            ->editColumns([], [ // Mass edit column
+                'class' => 'right '
+            ])
+
+            ->limit(20) // Limit record to be showed
+            ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
     }
 }

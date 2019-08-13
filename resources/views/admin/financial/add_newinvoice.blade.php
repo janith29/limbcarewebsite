@@ -8,7 +8,7 @@
 
 <form action="addninvoice" method="post">
 {{ csrf_field() }}
-        <h3>other payment</h3>
+        <h3>Invoice</h3>
 @if (!$errors->isEmpty())
 <div class="alert alert-danger" role="alert">
 {!! $errors->first() !!}
@@ -18,11 +18,45 @@
 @if(Session::has('message'))
     <div class="alert alert-danger">{{ Session::get('message') }}</div>
 @endif
-        <div class="form-group">
-            <label for="oth_note">Service</label>
-            <input type="text" class="form-control" name="Service" id="Service" placeholder="Service"value="{{ old('Service') }}" >
-        </div>
+
+@php
+                
+use Illuminate\Support\Facades\DB;
+use App\Models\Service;
+
+$services = Service::all();
+@endphp
+<div class="form-group">
+    <label for="Service">Service type *</label>
+    <select name="Service" class="form-control" >
+        <option  disabled>Select one</option>
+        <option  disabled>*****Orthosis*****</option>
+        @foreach($services as $service)
+        @if (($service->type)==="orthosis")
+            <option value={{$service->id}}>{{$service->serviceName}}</option>
+        @endif
+        @endforeach 
+        <option  disabled>****Prosthesis****</option>
+        @foreach($services as $service)
+        @if (($service->type)==="prosthesis")
+            <option value={{$service->id}}>{{$service->serviceName}}</option>
+        @endif
+        @endforeach 
+        <option  disabled>*****Cosmetic*****</option>
+        @foreach($services as $service)
+        @if (($service->type)==="cosmetic")
+            <option value={{$service->id}}>{{$service->serviceName}}</option>
+        @endif
+        @endforeach 
+        <option  disabled>*****Children******</option>
+        @foreach($services as $service)
+        @if (($service->type)==="children")
+            <option value={{$service->id}}>{{$service->serviceName}}</option>
+        @endif
+        @endforeach 
         
+    </select>
+</div>
         <div class="form-group">
             <label for="oth_am">Amount</label>
             <input type="text" class="form-control" name="amount" id="amount" placeholder="eg:-6786000.00"value="{{ old('amount') }}" >

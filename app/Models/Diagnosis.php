@@ -9,6 +9,6 @@ class Diagnosis extends Model
     protected $table='diagnosis';
     protected $primarykey='id';
     protected $fillable=[
-        'id', 'patientname', 'service', 'hight', 'weight', 'discription', 'skech', 'consultant_dr'
+        'id','Did', 'patientname', 'service', 'hight', 'weight', 'discription', 'skech', 'consultant_dr'
     ];
 }

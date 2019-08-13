@@ -1,6 +1,26 @@
 @extends('patient.layouts.patient')
 
 @section('content')
+    @php
+use Illuminate\Support\Facades\DB;
+$email=auth()->user()->email;
+
+$IDs = DB::table('patient')->where('email', $email)->get();
+$IDpa = 0;
+        foreach($IDs as $ID)
+        {
+            $IDpa=$ID->id;
+            
+        }
+        $pation = DB::select('select * from patient where id ='.$IDpa);
+        $name='n';
+foreach($pation as $pations)
+        {
+            $name=$pations->name;
+        }
+        $appointments=DB::select('select * from appointments where name ="'.$name.'"');
+
+@endphp
     <div class="row title-section">
         <div class=".col-xs-12 .col-sm-6 .col-lg-8">
             @section('title', "Appointments")
@@ -8,15 +28,9 @@
         <div class=".col-xs-6 .col-lg-4 searchbar-addbt">
             <div class="topicbar">
                 {{-- <a href="{{ route('admin.employees.add') }}" class="btn btn-primary">Add Employee</a> --}}
-                {{ link_to_route('admin.appointments.add', 'Add Appointment', null, ['class' => 'btn btn-primary']) }}
+                {{ link_to_route('patient.appointments.add', 'Add Appointment', null, ['class' => 'btn btn-primary']) }}
             </div>
-            <div class="right-searchbar">
-                <!-- Search form -->
-                <form class="form-inline active-cyan-3">
-                    <input class="form-control form-control-sm ml-3 w-100" type="text" placeholder="Search" aria-label="Search">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </form>
-            </div>
+            
         </div>
     </div>
     <div class="row">
@@ -45,15 +59,11 @@
                         <td>{{ $appointment->type }}</td>
                         <td>
                             {{-- {!! Form::open(array('route' => ['admin.appointments.delete', $appointment->id], 'method' => 'DELETE')) !!} --}}
-                                <a class="btn btn-xs btn-primary" href="{{ route('admin.appointments.show', [$appointment->id]) }}">
+                                <a class="btn btn-xs btn-primary" href="{{ route('patient.appointments.show', [$appointment->id]) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a class="btn btn-xs btn-info" href="{{ route('admin.appointments.edit', [$appointment->id]) }}">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                                <a class="btn btn-xs btn-danger" onclick="return confirm('Will be permanently deleted?')" href="{{ route('admin.appointments.delete', $appointment->id) }}">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                               
+                               
                                 {{-- {!! Form::button('<i class="fa fa-trash"></i>', ['class' => 'btn btn-danger', 'type' => 'submit', 'style'=> 'width: 18px; height: 22px;']) !!}
                             {!! Form::close() !!} --}}
                             {{--@if(!$user->hasRole('administrator'))--}}

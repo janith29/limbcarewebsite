@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -11,6 +12,19 @@
 |
 */
 
+Route::get('/', 'HomeController@index')->name('/');;
+Route::get('/aboutus', 'AboutUsController@aboutus');
+Route::get('/services', 'ServicesController@services')->name('services');
+Route::get('/contact', 'ContactController@contact');
+Route::get('services/orthosis/{services}', 'ServicesController@orthosisshow')->name('services.orthosis.show');
+Route::get('services/prosthesis/{services}', 'ServicesController@prosthesis')->name('services.prosthesis.show');
+Route::get('services/cosmetic/{services}', 'ServicesController@cosmetic')->name('services.cosmetic.show');
+Route::get('services/children/{services}', 'ServicesController@children')->name('services.children.show');
+Route::get('services/orthosishome', 'ServicesController@orthosishome')->name('orthosishome');
+Route::get('services/prosthesishome', 'ServicesController@prosthesishome')->name('prosthesishome');
+Route::get('services/cosmetichome', 'ServicesController@cosmetichome')->name('cosmetichome');
+Route::get('services/childrenhome', 'ServicesController@childrenhome')->name('childrenhome');
+
 
 /**
  * Auth routes
@@ -21,7 +35,12 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::get('login', 'LoginController@showLoginForm')->name('login');
     Route::post('login', 'LoginController@login');
     Route::get('logout', 'LoginController@logout')->name('logout');
-
+    
+    Route::get('reset1', 'LoginController@reset1')->name('reset1');
+    Route::post('setreset', 'LoginController@setreset');
+    Route::post('setpass', 'LoginController@setpass');
+    Route::post('setnewpass', 'LoginController@setnewpass');
+    
     // Registration Routes...
     if (config('auth.users.registration')) {
         Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
@@ -33,7 +52,9 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
     Route::post('password/reset', 'ResetPasswordController@reset');
-
+    Route::post('resetpass', 'ForgotPasswordController@resetpass')->name('resetpass');
+    Route::post('restnewpass', 'ForgotPasswordController@restnewpass')->name('restnewpass');
+    
     // Confirmation Routes...
     if (config('auth.users.confirm_email')) {
         Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
@@ -49,16 +70,42 @@ Route::group(['namespace' => 'Auth'], function () {
  * Backend routes
  */
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => 'administrator'], function () {
-    
+   
+    Route::post('financial/bill/printbill', 'FinancialController@printbill');
+    Route::post('financial/index_invoice/printinvoice', 'FinancialController@printinvoice');
+    Route::get('financial/InReport','FinancialController@incomereport')->name('financial.IncomeReport');
+
+    Route::post('financial/Incomereport', 'FinancialController@displayIncomeReport');
+
+    Route::get('financial/outReport','FinancialController@Outcomereport')->name('financial.OutcomeReport');
+
+    Route::post('financial/Outcomereport', 'FinancialController@displayOutcomeReport');
+    Route::get('question_forum/qareport','QuestionsForumController@report')->name('question_forum.qareport');
+    Route::post('question_forum/qarepo', 'QuestionsForumController@QAReport');
+    Route::get('diagnosis/DiaReport','DiagnosisController@Report')->name('diagnosis.DiaReport');
+    Route::post('diagnosis/direpo', 'DiagnosisController@DiaReport');
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::post('storereport', 'StoreController@displayReport');
     
     Route::post('financial/searchinvoice','FinancialController@searchinvoice');
-    
     Route::post('financial/searchbillin','FinancialController@searchbillin');
     Route::post('financial/searchbill','FinancialController@searchbill');
     Route::post('financial/add_salary/addsalary','FinancialController@salary');
+
+    //quotation
+    Route::get('quotation','QuotationController@index')->name('quotation');
+    Route::get('quotation/add', 'QuotationController@create')->name('quotation.add');
+    Route::post('quotation/addquotation', 'QuotationController@store');
+    Route::get('quotation/show/{quotation}', 'QuotationController@show')->name('quotation.show');
+    Route::get('quotation/delete/{quotation}', 'QuotationController@destroy')->name('quotation.delete');
+    Route::get('quotation/edit/{quotation}', 'QuotationController@edit')->name('quotation.edit');
+    
+    Route::post('quotation/edit/updatequotation', 'QuotationController@update');
+    Route::post('quotation/show/printQuotation', 'QuotationController@print');
+   
+    Route::post('searchQuotation','QuotationController@search');
+    Route::post('quotation/delete/deletequotation', 'QuotationController@sedelete');
     //Employee
     Route::get('employees', 'EmployeeController@index')->name('employees');
     Route::get('employees/add', 'EmployeeController@create')->name('employees.add');
@@ -95,6 +142,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('diagnosis/{diagnosis}', 'DiagnosisController@show')->name('diagnosis.show');
    
     Route::post('diagnosis/searchpationdiagnosis','DiagnosisController@searchpationdiagnosis');
+    Route::post('diagnosis/adddiagnosissketch','DiagnosisController@adddiagnosissketch');
     Route::post('diagnosis/add/adddiagnosis','DiagnosisController@store');
     Route::post('diagnosis/edit/updatediagnosis','DiagnosisController@update');
     
@@ -169,7 +217,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::put('financial/{employee}', 'EmployeeController@update')->name('employees.update');
 
     //Patient
-     Route::any('patientsearch','PatientController@search');
+     Route::post('patientsearch','PatientController@search');
     Route::post('patientsreport', 'PatientController@displayReport');
 
     Route::get('patient', 'PatientController@index')->name('patients');
@@ -187,15 +235,26 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     
         //Services
     Route::get('services', 'ServiceController@index')->name('services');
+    Route::get('servicesphoto/{service}', 'ServiceController@servicesphoto')->name('servicesphoto');
+    Route::get('servicesvideo/{service}', 'ServiceController@servicesvideo')->name('servicesvideo');
+    Route::post('servicesphoto/addphotoservice', 'ServiceController@addphotoservice')->name('services.add');
+    Route::post('servicesvideo/addvideoservice', 'ServiceController@addvideoservice')->name('services.add');
     Route::get('services/add', 'ServiceController@create')->name('services.add');
     Route::get('services/{service}', 'ServiceController@show')->name('services.show');
     Route::get('services/edit/{service}', 'ServiceController@edit')->name('services.edit');
     Route::get('services/delete/{service}', 'ServiceController@destroy')->name('services.delete');
+    // Route::get('/servicesphotodestroy/{service}', 'ServiceController@servicesphotodestroy')->name('servicesphotodestroy');
     Route::post('services/addservice','ServiceController@store');
     Route::post('services/edit/updateservices','ServiceController@update');
     Route::post('searchservice','ServiceController@search');
     Route::post('services/delete/deleteservices','ServiceController@sedelete');
     
+    Route::post('servicesvideodestroy/deleteservicesphoto','ServiceController@deleteservicesvideo');
+    Route::get('/servicesvideodestroy/{service}', 'ServiceController@servicesvideodestroy')->name('servicesvideodestroy');
+    
+    Route::post('servicesphotodestroy/deleteservicesphoto','ServiceController@deleteservicesphoto');
+    Route::get('/servicesphotodestroy/{service}', 'ServiceController@servicesphotodestroy')->name('servicesphotodestroy');
+        
     //Store
     Route::get('store', 'StoreController@index')->name('store');
     Route::get('store/edit/{store}', 'StoreController@edit')->name('store.edit');
@@ -416,8 +475,11 @@ Route::group(['prefix' => 'pno', 'as' => 'pno.', 'namespace' => 'employee\pno', 
 });
 Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'patient', 'middleware' => 'patient'], function () {
     // Dashboard
+    
+    Route::get('financial/index_invoice/{Invoice}', 'PatientController@financialinvoice')->name('financial.showinvoice');
+ 
     Route::get('diagnosis', 'PatientController@patientint')->name('diagnosis.index');
-
+    Route::get('diagnosis/{diagnosis}', 'DiagnosisController@show')->name('diagnosis.show');
     Route::get('/', 'PatientDashboardController@index')->name('dashboard');
     
     //Employee
@@ -427,7 +489,11 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'patient
     //appointment
     Route::get('appointments', 'AppointmentController@index')->name('appointments');
     Route::get('appointments/add', 'AppointmentController@create')->name('appointments.add');
-    
+    Route::post('appointments/store', 'AppointmentController@store')->name('appointments.store');
+    Route::post('appointments/checkDate', 'AppointmentController@checkDate')->name('appointments.checkDate');
+    Route::post('appointments/checkDate/store', 'AppointmentController@store')->name('appointments.checkDate.store');
+   
+    Route::get('appointments/{appointment}', 'AppointmentController@show')->name('appointments.show');
     //question
     Route::get('question_forum', 'PatientController@quindex')->name('question_forum');
     Route::get('question_forum/add', 'QuestionsForumController@create')->name('question_forum.add');
@@ -444,10 +510,13 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'patient
     Route::get('patient', 'PatientController@index')->name('patients');
     //Services
     Route::get('services', 'PatientController@servicesi')->name('services');
+    
     //doctor
     Route::get('doctors', 'PatientController@doctors')->name('doctors');
     
-    //Diagnosis
+    //financial
+    Route::get('financial', 'PatientController@financial')->name('financial');
+    Route::get('financial/{financialBill}', 'PatientController@financialbill')->name('financial.showBill');
   
 });
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'namespace' => 'doctor', 'middleware' => 'doctor'], function () {
@@ -489,11 +558,6 @@ Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'namespace' => 'doctor', 
 
     
 });
-
-Route::get('/', 'HomeController@index');
-Route::get('/aboutus', 'AboutUsController@aboutus');
-Route::get('/services', 'ServicesController@services');
-Route::get('/contact', 'ContactController@contact');
 
 /**
  * Membership

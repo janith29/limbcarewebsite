@@ -8,6 +8,6 @@ class QuestionsForum extends Model
 {
     protected $table='question';
     protected $fillable=[
-        'id', 'questionTitle', 'question', 'questionType', 'questionAsk', 'questionPic'
+        'id','Did', 'questionTitle', 'question', 'questionType', 'questionAsk', 'questionPic'
     ];
 }

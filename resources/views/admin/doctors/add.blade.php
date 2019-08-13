@@ -30,14 +30,7 @@
                 <label for="inputAddress">E-mail</label>
                 <input type="text" name="email" class="form-control" id="inputAddress" value="{{ old('email') }}" >
             </div>
-            <div class="form-group">
-                <label for="inputAddress">Password</label>
-                <input type="password" name="password" class="form-control" id="inputAddress"  >
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Comfirm Password</label>
-                <input type="password" name="comfirm-password" class="form-control" id="inputAddress" value="{{ old('username') }}" >
-            </div>
+            
             <div class="form-group">
                 <label for="inputAddress">Mobile</label>
                 <input type="text" name="mobile" class="form-control" id="inputAddress" value="{{ old('mobile') }}" >

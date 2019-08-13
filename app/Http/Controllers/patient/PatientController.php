@@ -6,6 +6,9 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Service;
+use App\Models\FinancialBillPayment;
+use App\Models\Invoice;
 class PatientController extends Controller
 {
     /**
@@ -52,8 +55,8 @@ class PatientController extends Controller
      */
     public function servicesi()
     {
-        $services = DB::select('select * from service');
-        return view('patient.services.index',compact('services'));
+        $services = Service::all();
+        return view('patient.services.index', compact('services'));
     }
     public function searchservice(Request $request )
     {
@@ -82,7 +85,7 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        //financialinvoice
     }
 
     /**
@@ -91,8 +94,30 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patient $patient)
+    public function financial(Request $request)
     {
-        //
+        return view('patient.financial.index');
+    }
+    public function financialinvoice(Invoice $Invoice)
+    {
+        $patients=patient::all();
+        return view('patient.financial.showinvoice',['Invoice' => $Invoice],compact('patients'));
+    }
+    public function showinvoce(Invoice $Invoice)
+    {
+        $patients=patient::all();
+        return view('patient.financial.showinvoice', ['Invoice' => $Invoice],compact('patients'));
+    }
+    public function financialbill(FinancialBillPayment $financialBill)
+    {
+      
+        $invoiceid=$financialBill->invoice_id;
+        $Invoices = Invoice::all();
+        $patients=patient::all();
+        $PId= DB::table('invoice')->where('id', $invoiceid)->value('patient_ID');
+        $Pname= DB::table('patient')->where('id', $PId)->value('name');
+        $array = array('name' => $Pname);
+       
+        return view('patient.financial.showBill', ['financialBill' => $financialBill],compact('patients'),compact('Invoices'))->with('array', $array);;
     }
 }

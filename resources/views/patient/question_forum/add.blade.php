@@ -22,25 +22,9 @@ $IDpa = 0;
         {
             $IDpa=$ID->id;
             
+            
         }
-        $pation = DB::select('select * from diagnosis where id ='.$IDpa);
-        $patientname='n';
-            $service='n';
-            $consultant_dr='n';
-            $discription='n';
-            $hight='n';
-            $weight='n';
-            $skech='n';
-foreach($pation as $pations)
-        {
-            $patientname=$pations->patientname;
-            $service=$pations->service;
-            $discription=$pations->discription;
-            $consultant_dr=$pations->consultant_dr;
-            $hight=$pations->hight;
-            $weight=$pations->weight;
-            $skech= $diagnosis->skech;
-        }
+       
 
 @endphp
 @if(Session::has('message'))

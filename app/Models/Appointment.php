@@ -15,13 +15,14 @@ class Appointment extends Model
 
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'name', 'date', 'time', 'type'
+        'id','Did', 'name', 'date', 'time', 'type','applicant'
     ];
 
     public function scopeSearch($query, $key) {
         return $query->where('name', 'like', '%' .$key. '%')
                     ->orWhere('type', 'like', '%' .$key. '%')
                     ->orWhere('date', 'like', '%' .$key. '%')
+                    ->orWhere('Did', 'like', '%' .$key. '%')
                     ->orWhere('time', 'like', '%' .$key. '%');
     }
 }

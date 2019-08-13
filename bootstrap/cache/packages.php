@@ -13,6 +13,17 @@
       0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
     ),
   ),
+  'barryvdh/laravel-debugbar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
+    ),
+  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -74,6 +85,12 @@
     array (
       0 => 'Jimmyjs\\ReportGenerator\\ServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'PdfReport' => 'Jimmyjs\\ReportGenerator\\Facades\\PdfReportFacade',
+      'ExcelReport' => 'Jimmyjs\\ReportGenerator\\Facades\\ExcelReportFacade',
+      'CSVReport' => 'Jimmyjs\\ReportGenerator\\Facades\\CSVReportFacade::class',
+    ),
   ),
   'kyslik/column-sortable' => 
   array (
@@ -110,6 +127,13 @@
     array (
       'Form' => 'Collective\\Html\\FormFacade',
       'Html' => 'Collective\\Html\\HtmlFacade',
+    ),
+  ),
+  'laravelnews/laravel-twbs4' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LaravelNews\\Presets\\BootstrapFour\\BootstrapPresetServiceProvider',
     ),
   ),
   'maatwebsite/excel' => 

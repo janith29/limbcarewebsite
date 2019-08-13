@@ -3,6 +3,13 @@
 @section('title',"Add an Diagnosis", "Diagnosis") 
 
 @section('content')
+@php
+                
+use Illuminate\Support\Facades\DB;
+use App\Models\Service;
+
+$services = Service::all();
+@endphp
 <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 <form action="adddiagnosis" method="post" enctype="multipart/form-data">
 {{ csrf_field() }}
@@ -15,9 +22,37 @@
             <label for="pa_name">Patient name</label>
             <h2> {{$patient->name}}</h2>
          </div>
+        
         <div class="form-group">
-            <label for="pa_service">Service *</label>
-            <input type="text" class="form-control" name="pa_service" id="pa_service" placeholder="Service" value="{{ old('pa_service') }}">
+            <label for="pa_service">Service type *</label>
+            <select name="pa_service" class="form-control" >
+                <option  disabled>Select one</option>
+                <option  disabled>*****Orthosis*****</option>
+                @foreach($services as $service)
+                @if (($service->type)==="orthosis")
+                    <option value={{$service->serviceName."(orthosis)"}}>{{$service->serviceName}}</option>
+                @endif
+                @endforeach 
+                <option  disabled>****Prosthesis****</option>
+                @foreach($services as $service)
+                @if (($service->type)==="prosthesis")
+                    <option value={{$service->serviceName."(prosthesis)"}}>{{$service->serviceName}}</option>
+                @endif
+                @endforeach 
+                <option  disabled>*****Cosmetic*****</option>
+                @foreach($services as $service)
+                @if (($service->type)==="cosmetic")
+                    <option value={{$service->serviceName."(cosmetic)"}}>{{$service->serviceName}}</option>
+                @endif
+                @endforeach 
+                <option  disabled>*****Children******</option>
+                @foreach($services as $service)
+                @if (($service->type)==="children")
+                    <option value={{$service->serviceName."(children)"}}>{{$service->serviceName}}</option>
+                @endif
+                @endforeach 
+                
+            </select>
         </div>
         <div class="form-group">
             <label for="pa_dr">Consultant Doctor *</label>

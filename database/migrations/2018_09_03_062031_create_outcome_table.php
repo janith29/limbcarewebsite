@@ -13,7 +13,7 @@ class CreateOutcomeTable extends Migration
      */
     public function up()
     {
-        Schema::create('Outcome', function (Blueprint $table) {
+        Schema::create('outcome', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('amount');
             $table->timestamps();

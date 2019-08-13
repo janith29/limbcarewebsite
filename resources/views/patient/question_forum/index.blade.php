@@ -26,7 +26,7 @@ $IDpa = 0;
             $IDpa=$ID->id;
             
         }
-        $questionsforum = DB::select('select * from question where questionAsk ='.$IDpa);
+        $questionsforum = DB::select('select * from question where  questionType="Patient" AND questionAsk ='.$IDpa);
         
 
 @endphp
@@ -60,4 +60,5 @@ $IDpa = 0;
                 </table>
         
     </div>
+   
 @endsection

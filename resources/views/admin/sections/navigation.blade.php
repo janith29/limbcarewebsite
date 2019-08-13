@@ -116,6 +116,12 @@
                             {{ "Question Forum" }}
                         </a>
                     </li>
+                    <li class="@if (Request::is('admin/quotation/add') || Request::is('admin/quotation/edit/'.$qf) || Request::is('admin/quotation/'.$qf)) active @endif">
+                        <a href="{{ route('admin.quotation') }}">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            {{ "Quotation" }}
+                        </a>
+                    </li>
                     {{-- <li>
                         <a href="{{ route('admin.users') }}">
                             <i class="fa fa-users" aria-hidden="true"></i>

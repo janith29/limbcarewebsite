@@ -37,7 +37,7 @@
         <div class="form-group">
             <label for="service_type">Service type *</label>
             <select name="service_type" class="form-control" >
-                <option value="">Select one</option>
+                <option disabled><h5>Select one</h5></option>
                 <option value="prosthesis">Prosthesis</option>
                 <option value="orthosis">Orthosis</option>
                 <option value="cosmetic">Cosmetic solutions</option>

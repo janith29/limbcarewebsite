@@ -35,10 +35,7 @@
                     {{-- href="{{ route('admin.employees') }}" --}}
                     
                 </tr>
-                <tr><th></th><td>
-                           <a class="btn btn-xs btn-info" href="{{ route('admin.financial.edit_otherpay', [$financialOtherPayment->id]) }}">
-                                <font size="+2"><i class="fa fa-edit"></i></font></a>
-                </td> </tr>   
+                <tr><th></th> </tr>   
             </tbody>
         </table>
     </div>

@@ -10,6 +10,7 @@ use App\Http\Requests\Qeestionval;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Qeestionupdateval;
 use App\Http\Requests\Replyval;
+use PdfReport;
 class QuestionsForumController extends Controller
 {
     /**
@@ -233,6 +234,41 @@ class QuestionsForumController extends Controller
 
         return view('admin.question_forum.index', compact('questionsforum'));
 
+    }
+    public function Report()
+    {
+
+        return view('admin.question_forum.QAReport');
+    }
+
+    public function QAReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $sortBy = $request->input('sort_by');
+
+        $title = 'Registered Doctor Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+            'Sort By' => $sortBy
+        ];
+
+        $queryBuilder = quetion::select(['id','created_at','question', 'questionTitle','questionType','questionAsk']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+            'Date ' =>'created_at', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
+
+            'Question Title' => 'questionTitle',
+            'Question Type' => 'questionType',
+            'Question' => 'question',
+
+            'Question Ask' => 'questionAsk',
+
+
+
+        ];
     }
     
 }

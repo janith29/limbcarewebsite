@@ -35,10 +35,22 @@
                 <tr>
                     <th>Bill amount</th>
                     <td>
-                       <h3> {{ $financialBill->amount }}</h3>
+                       <h3>Rs. {{ $financialBill->amount }}.00</h3>
                     </td>
                 </tr>
+                
                 <tr>
+                    <th>Print</th>
+                    <td> 
+                        <form action="printbill" method="post">
+                                {{ csrf_field() }}
+                            <input type="hidden" id="inID" name="inID" value="{{$financialBill->invoice_id}}">
+                            <input type="hidden" id="amount" name="amount" value="{{$financialBill->amount}}">
+                            <input type="hidden" id="id" name="id" value="{{$financialBill->id}}">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                        </form>
+                    </td>
+                </tr>
                 <tr>
                     <th></th>
                     <td><a href="{{ URL::previous() }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Go Back</a></td>

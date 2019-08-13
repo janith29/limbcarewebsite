@@ -15,10 +15,10 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('Did');
             $table->string('name');
             $table->string('email');
             $table->string('hospital');
-            $table->string('password');
             $table->string('mobile');
             $table->string('doc_pic');
 

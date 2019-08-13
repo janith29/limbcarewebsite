@@ -46,6 +46,21 @@ class QuestionsForumController extends Controller
     {
         $lastid=0;
         $name='nophoto';
+        $doctor=DB::select('select * from question ORDER BY id DESC LIMIT 1');
+        $did="no";
+        foreach($doctor as $doc)
+        {
+            $lastid=$doc->id;
+            $did=$doc->Did;
+        }
+        if($lastid==0)
+         {
+            $did="QUI000";
+         }
+         $lastDid=substr($did,3);
+         $lastDid=$lastDid+1;
+         $lastDid=str_pad($lastDid,4,"0",STR_PAD_LEFT);
+         $did="QUI".$lastDid;
        if(!($request->qu_pic)==0)
        {
         $file=$request ->file('qu_pic');
@@ -56,6 +71,7 @@ class QuestionsForumController extends Controller
         $ques->question = $request->get('question');
         $ques->questionType = $request->get('qu_Type');
         $ques->questionAsk = $request->get('qu_Ask');
+        $ques->Did=$did;
         $ques->save();
         $Questions = DB::select('select * from question ORDER BY id DESC LIMIT 1');
         $type=$file->guessExtension();
@@ -68,6 +84,7 @@ class QuestionsForumController extends Controller
         $name=$lastid."pic.".$type;
         $file->move('image/question/pic',$name);
         $ques->questionPic=$name;
+        
         $ques->save();
         return view('patient.question_forum.success');
         }
@@ -77,6 +94,7 @@ class QuestionsForumController extends Controller
         $ques->questionType = $request->get('qu_Type');
         $ques->questionAsk = $request->get('qu_Ask');
         $ques->questionPic=$name;
+        $ques->Did=$did;
         $ques->save(); 
         return view('patient.question_forum.success');
     }

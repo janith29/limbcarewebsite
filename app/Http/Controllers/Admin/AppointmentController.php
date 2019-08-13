@@ -78,16 +78,38 @@ class AppointmentController extends Controller
             'time.after' => 'Appointment Time cannot be now or past'
         ];
         $this->validate($request, $validatedData, $customMessages);
-
+        $did=null;
+        $lastid = 0;
+        $appointments = DB::select('select * from appointments ORDER BY id DESC LIMIT 1');
+        foreach($appointments as $appointment)
+        {
+            $lastid=$appointment->id;
+            $did=$appointment->Did;
+        }
+        if($lastid==0)
+         {
+             $did="APP000";
+         }
+         $lastDid=substr($did,3);
+         $lastDid=$lastDid+1;
+         $lastDid=str_pad($lastDid,4,"0",STR_PAD_LEFT);
+         $did="APP".$lastDid;
         if(\Auth::check()) {
         
-            Appointment::create($request->all());
+            Appointment::create([
+                'Did'=>$did,
+                'name'=>$request->get('name'),
+                'date'=>$request->get('date'),
+                'time'=>$request->get('time'),
+                'type'=>$request->get('type'),
+                'applicant'=>\Auth::user()->id
+                
+            ]);
             
             //add notification to display on employees
             Notification::create([
                 'user_type' => \Auth::user()->usertype,
                 'user_id' => \Auth::user()->id,
-                'appointment_id' => Appointment::latest()->first()->id,
                 'message' => 'Appointment is requested by ' . \Auth::user()->name,
                 'header' => 'New appointment Request',
                 'status' => 'unread',

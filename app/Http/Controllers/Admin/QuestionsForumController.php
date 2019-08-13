@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Qeestionupdateval;
 use App\Http\Requests\Replyval;
 use File;
+
+use PdfReport;
 class QuestionsForumController extends Controller
 {
     /**
@@ -134,6 +136,7 @@ class QuestionsForumController extends Controller
         $replyA->replay = $request->get('replye');
         $replyA->replier_ID = $request->get('relier');
         $replyA->questionId = $request->get('q_id');
+        $replyA->Did = $name;
         $replyA->save();
         $replys = DB::select('select * from service ORDER BY id DESC LIMIT 1');
         $type=$file->guessExtension();
@@ -154,6 +157,7 @@ class QuestionsForumController extends Controller
         $replyA->replier_ID = $request->get('relier');
         $replyA->questionId = $request->get('q_id');
         $replyA->replay_pic=$name;
+        $replyA->Did = $name;
         $replyA->save();
         return view('admin.question_forum.success');  }
     /**
@@ -239,6 +243,50 @@ class QuestionsForumController extends Controller
 
         return view('admin.question_forum.index', compact('questionsforum'));
 
+    }
+    public function report()
+    {
+
+        return view('admin.question_forum.QAReport');
+    }
+    public function QAReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $sortBy = $request->input('sort_by');
+
+        $title = 'Registered Doctor Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+            'Sort By' => $sortBy
+        ];
+
+        $queryBuilder = QuestionsForum::select(['id','created_at','question', 'questionTitle','questionType','questionAsk']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+            'Date ' =>'created_at', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
+
+            'Question Title' => 'questionTitle',
+            'Question Type' => 'questionType',
+            'Question' => 'question',
+
+            'Question Ask' => 'questionAsk',
+
+
+
+        ];
+
+        // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+
+            ->editColumns([], [ // Mass edit column
+                'class' => 'right '
+            ])
+
+            ->limit(20) // Limit record to be showed
+            ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
     }
     
 }

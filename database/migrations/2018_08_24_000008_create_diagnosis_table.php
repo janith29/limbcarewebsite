@@ -15,6 +15,7 @@ class CreateDiagnosisTable extends Migration
     {
         Schema::create('diagnosis', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('Did');
             $table->string('patientname');
             $table->string('service');
             $table->integer('hight');

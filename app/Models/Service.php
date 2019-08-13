@@ -10,6 +10,6 @@ class Service extends Model
 
     protected $primarykey = 'id';
     protected $fillable = [
-        'id', 'pic', 'serviceName', 'description', 'type','dataenterID', 'dataupdaterID'
+        'id','Did', 'pic', 'serviceName', 'description', 'type','dataenterID', 'dataupdaterID'
     ];
 }

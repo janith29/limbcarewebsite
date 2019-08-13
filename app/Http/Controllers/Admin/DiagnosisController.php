@@ -2,12 +2,14 @@
 namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Diagnosis;
+use App\Models\DiagnosisPhoto;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DiagnosisVal;
 use App\Http\Requests\DiagnosisValUpdate;
 use App\Models\Patient;
 
+use PdfReport;
 class DiagnosisController extends Controller
 {
     /**
@@ -18,6 +20,15 @@ class DiagnosisController extends Controller
     public function index(Request $request)
     {
         $diagnosise=Diagnosis::all();
+        foreach($diagnosise as $diagnosisse)
+          {
+              $IDDID=$diagnosisse->patientname;
+            $diagnosis = DB::select('select * from patient where id ='.$IDDID);
+          foreach($diagnosis as $diagnosiss)
+          {
+            $diagnosisse->patientname=$diagnosiss->name;
+          }
+        }
         return view('admin.diagnosis.index',compact('diagnosise') );
         
     }
@@ -48,29 +59,71 @@ class DiagnosisController extends Controller
     {
         $lastid=0;
         $name="panding";
-        $diagnosis->patientname = $request->get('name');
+        // $diagnosis->patientname = $request->get('name');
+        // $diagnosis->service = $request->get('pa_service');
+        // $diagnosis->hight = $request->get('pa_height');
+        // $diagnosis->weight = $request->get('pa_weight');
+        // $diagnosis->discription = $request->get('pa_discription');
+        // $diagnosis->skech = $name;
+        // $diagnosis->consultant_dr = $request->get('pa_dr');
+        // $diagnosis->save();
+       $file=$request ->file('pa_sketch');
+       $type=$file->guessExtension();
+       $diagnosise =DB::select('select * from diagnosis ORDER BY id DESC LIMIT 1');
+       $did=null;
+        foreach($diagnosise as $diagnosisw)
+        {
+            $lastid=$diagnosisw->id;
+            $did=$diagnosisw->Did;
+        }
+       
+         if($lastid==0)
+         {
+            $did="DIA000";
+         }
+
+         $lastDid=substr($did,3);
+         $lastDid=$lastDid+1;
+         $lastDid=str_pad($lastDid,4,"0",STR_PAD_LEFT);
+         $did="DIA".$lastDid;
+         $lastid=$lastid+1;
+
+        $name=$lastid."sketch.".$type;
+        $file->move('image/diagnosis/sketch',$name);
+        $diagnosis->patientname = $request->get('ID');
         $diagnosis->service = $request->get('pa_service');
         $diagnosis->hight = $request->get('pa_height');
         $diagnosis->weight = $request->get('pa_weight');
         $diagnosis->discription = $request->get('pa_discription');
         $diagnosis->skech = $name;
         $diagnosis->consultant_dr = $request->get('pa_dr');
-        $diagnosis->patientID = $request->get('ID');
+        $diagnosis->skech= $name;
+        $diagnosis->Did= $did;
         $diagnosis->save();
-       $file=$request ->file('pa_sketch');
-       $type=$file->guessExtension();
-       $diagnosise =DB::select('select * from diagnosis ORDER BY id DESC LIMIT 1');
-        
+         return view('admin.diagnosis.success');
+    }
+    public function adddiagnosissketch(Request $request,DiagnosisPhoto $dphoto)
+    {
+        $lastid=0;
+        $name="panding";
+        $file=$request ->file('dia_sketch');
+        $type=$file->guessExtension();
+        $diagnosise =DB::select('select * from diagnosisphoto ORDER BY id DESC LIMIT 1');
         foreach($diagnosise as $diagnosisw)
         {
             $lastid=$diagnosisw->id;
+           
         }
-        $name=$lastid."sketch.".$type;
-        $file->move('image/diagnosis/sketch',$name);
+        $lastid=$lastid+1;
+        
+        $name=$lastid."othersketch.".$type;
+        $file->move('image/diagnosis/sketch/other',$name);
+        $dphoto->diagnosis_pic= $name;
+        $dphoto->diagnosis_ID= $request->get('disId');
+        $dphoto->discription= $request->get('DISDIP');
+        $dphoto->save();
+        return view('admin.diagnosis.success');
 
-        $diagnosis->skech= $name;
-        $diagnosis->save();
-         return view('admin.diagnosis.success');
     }
     public function update(DiagnosisValUpdate $request,Diagnosis $diagnosise)
     {
@@ -146,16 +199,67 @@ class DiagnosisController extends Controller
     }
     public function searchpationdiagnosis(Request $request)//Request $request, Employee $employee
     {
-        $patients = DB::table('patient')->where('id', $request['search'])->orWhere('name', 'like', '%' . $request['search'] . '%')->get();
+        $patients = DB::table('patient')
+        ->where('id', $request['search'])
+        ->orWhere('Did', 'like', '%' . $request['search'] . '%')
+        ->orWhere('name', 'like', '%' . $request['search'] . '%')
+        ->get();
 
         return view('admin.diagnosis.indexadd', compact('patients'));
 
     }
     public function search(Request $request)//Request $request, Employee $employee
     {
-        $diagnosise = DB::table('diagnosis')->where('id', $request['search'])->orWhere('patientname', 'like', '%' . $request['search'] . '%')->get();
+        $diagnosise = DB::table('diagnosis')->where('id', $request['search'])
+        ->orWhere('Did', 'like', '%' . $request['search'] . '%')
+        ->orWhere('patientname', 'like', '%' . $request['search'] . '%')
+        ->get();
 
         return view('admin.diagnosis.index', compact('diagnosise'));
 
+    }
+    public function Report()
+    {
+
+        return view('admin.diagnosis.DiaReport');
+    }
+    public function DiaReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $sortBy = $request->input('sort_by');
+
+        $title = 'Diagnosis Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+            'Sort By' => $sortBy
+        ];
+
+        $queryBuilder = diagnosis::select(['id','patientname','hight', 'weight','discription']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+            'Date ' =>'created_at', // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
+
+            'Patient Name' => 'patientname',
+            'Height' => 'hight',
+            'Weight' => 'weight',
+
+            'Description' => 'discription',
+
+
+
+        ];
+
+        // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+
+            ->editColumns([], [ // Mass edit column
+                'class' => 'right '
+            ])
+
+            ->limit(20) // Limit record to be showed
+            ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
     }
 }

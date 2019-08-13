@@ -10,18 +10,29 @@
         <table  class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%" border="0">
             <thead>
             <tr>
-                <th>Actions</th>
+                
 
                     <div class="demptable">
                         {{ link_to_route('admin.diagnosis.index', 'Diagnosis Card', null, ['class' => 'btn btn-warning']) }}
                         {{ link_to_route('admin.patient.add', 'Add Patient', null, ['class' => 'btn btn-primary']) }}
                         {{ link_to_route('admin.patient.chartView', 'Report', null, ['class' => 'btn btn-primary']) }}
-
-                        <input type="text" placeholder="Search Patient" name="search">
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <div class="right-searchbar">
+                                <!-- Search form -->
+                                <form action="patientsearch" method="post" class="form-inline">
+                                        {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="search" placeholder="Search" aria-label="Search" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" style="margin-top: -10px;" type="submit">Search</button>
+                                    </div>
+                                    {{-- <i class="fa fa-search" aria-hidden="true"></i> --}}
+                                </form>
+                            </div>
+                        
                     </div>
 
-
+                    
             </tr>
             </thead>
         </table>
@@ -38,6 +49,7 @@
                         <div class="dcard-header">
                             <div class="dcard-body text-center" style="font-size: larger; color: white">
                                 <span class="dcard-title ">{{ $patient->name }}</span><br />
+                                <span class="dcard-title ">{{ $patient->Did }}</span><br />
                             </div>
                         <br/>
                             <div class="dcard-body text-center">

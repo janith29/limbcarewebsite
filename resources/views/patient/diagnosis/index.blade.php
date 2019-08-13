@@ -13,7 +13,7 @@ $IDpa = 0;
             $IDpa=$ID->id;
             
         }
-        $pation = DB::select('select * from diagnosis where id ='.$IDpa);
+        $diagnosise = DB::select('select * from diagnosis where patientname ='.$IDpa);
         $patientname='n';
             $service='n';
             $consultant_dr='n';
@@ -21,69 +21,42 @@ $IDpa = 0;
             $hight='n';
             $weight='n';
             $skech='n';
-foreach($pation as $pations)
-        {
-            $patientname=$pations->patientname;
-            $service=$pations->service;
-            $discription=$pations->discription;
-            $consultant_dr=$pations->consultant_dr;
-            $hight=$pations->hight;
-            $weight=$pations->weight;
-            $skech= $diagnosis->skech;
-        }
+
 
 @endphp
 @section('content')
-    <div class="row">
-        <table class="table table-striped table-hover">
-            <tbody>
+<div class="row">
+    <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+            width="100%">
+        <thead> 
+        <tr>
+            <th>DID</th>
+            <th>Patient name</th>
+            <th>Service</th>
+            <th>Doctor name</th>
+            <th>Actions{{ $IDpa}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($diagnosise as $diagnosis)
             <tr> 
-                <th>{{ __('views.admin.users.show.table_header_0') }}</th>
-                <td><img height="200" width="200" src="\image\diagnosis\sketch\{{ $skech }}" class="user-profile-image"></td>
-            </tr>
-
-            <tr>
-                <th>Patient name</th>
-                <td>{{ $patientname }}</td>
-            </tr>
-
-            <tr>
-                <th>Patient service</th>
+                <td>{{ $diagnosis->Did }}</td>
+                <td>{{ $diagnosis->patientname }}</td>
+                <td>{{ $diagnosis->service }}</td>
+                <td>{{ $diagnosis->consultant_dr }}</td>
                 <td>
-                        {{ $service }}
+                    <a class="btn btn-xs btn-primary" href="{{ route('patient.diagnosis.show',[$diagnosis->id]) }}">
+                        <i class="fa fa-eye"></i>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <th>Discription</th>
-                <td>
-                    {{ $discription }}
-                </td>
-            </tr>
-            <tr>
-                <th>Consultant doctor</th>
-                <td>
-                        {{ ($consultant_dr)}}
-                        
-                </td>
-            </tr>
-            <tr>
-                <th>Hight</th>
-                <td>
-                        {{ ($hight)}} cm
-                        
-                </td>
-            </tr>
-            <tr>
-                <th>Weight</th>
-                <td>
-                        {{ ($weight)}} kg
-                        
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
+<div class="pull-right">
+</div>
+</div>
+    
         <a href="{{ route('patient.patients') }}" class="btn btn-danger">Patient home</a>
     </div>
 @endsection

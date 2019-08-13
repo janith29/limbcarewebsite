@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use PdfReport;
 
 use App\Http\Requests\Bill;
 use App\Http\Requests\BillIpdate;
@@ -313,4 +314,94 @@ class FinancialController extends Controller
         DB::table('otherpay')->where('id', $request['id'])->delete();
         return view('admin.financial.success_other');
     }
+    public function incomereport()
+    {
+
+        return view('admin.financial.IncomeReport');
+    }
+    public function displayIncomeReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        //$sortBy = $request->input('sort_by');
+
+        $title = 'Income Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+
+        ];
+
+        $queryBuilder = income::select(['id','amount','created_at']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+
+
+            'Registered At' =>'created_at',
+            'Total Balance' => 'amount',
+
+
+        ];
+
+        // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+
+            ->editColumns(['Registered At','Total Balance'], [ // Mass edit column
+                'class' => 'right '
+            ])
+            ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
+                'Total Balance' => 'point' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
+            ])
+
+
+            ->limit(20) // Limit record to be showed
+            ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+    }
+    public function Outcomereport()
+    {
+
+        return view('admin.financial.OutcomeReport');
+    }
+
+    public function displayOutcomeReport(Request $request)
+    {
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        //$sortBy = $request->input('sort_by');
+
+        $title = 'Outcome Report'; // Report title
+
+        $meta = [ // For displaying filters description on header
+            'Registered on' => $fromDate . ' To ' . $toDate,
+
+        ];
+
+        $queryBuilder = outcome::select(['id','amount','created_at']) // Do some querying..
+        ->whereBetween('created_at', [$fromDate, $toDate]);
+
+        $columns = [ // Set Column to be displayed
+
+
+            'Registered At' =>'created_at',
+            'Total Balance' => 'amount',
+
+
+        ];
+
+        // Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
+        return PdfReport::of($title, $meta, $queryBuilder, $columns)
+
+            ->editColumns(['Registered At','Total Balance'], [ // Mass edit column
+                'class' => 'right '
+            ])
+            ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
+                'Total Balance' => 'point' // if you want to show dollar sign ($) then use 'Total Balance' => '$'
+            ])
+
+
+            ->limit(20) // Limit record to be showed
+            ->stream(); // other available method: download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+    }
+
 }
