@@ -1,173 +1,81 @@
 @extends('layouts.welcome')
-@section('navigation')
-<nav class="navbar navbar-inverse">
-
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand active" href="{{ url('/') }}">Artificiallimbcare.lk</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="{{ url('/') }}">{{ __('views.welcome.home') }}</a></li>
-      <li ><a href="{{ url('/aboutus') }}">About Us</a></li>
-      <li > <a href="{{ url('/services') }}">Services</a></li>
-      <li >  <a href="{{ url('/contact') }}">Contact</a></li>
-      
-     
-      
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-          @if (Route::has('login'))
-          @if (!Auth::check())
-              @if(config('auth.users.registration'))
-                  {{-- <a href="{{ url('/register') }}">{{ __('views.welcome.register') }}</a> --}}
-              @endif
-              <li><a href="{{ url('/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          @else
-              @if(auth()->user()->usertype == 'administrator'){{--->hasRole('administrator')--}}
-              <li> <a href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>
-              @elseif(auth()->user()->usertype == 'Receptionist')
-              <li> <a href="{{ url('/receptionist') }}">{{ __('views.welcome.admin') }}</a></li>
-              @elseif(auth()->user()->usertype == 'PNO')
-              <li>  <a href="{{ url('/pno') }}">{{ __('views.welcome.admin') }}</a></li>
-              @elseif(auth()->user()->usertype == 'Director')
-              <li>  <a href="{{ url('/director') }}">{{ __('views.welcome.admin') }}</a></li>
-              @elseif(auth()->user()->usertype == 'Patient')
-              <li>  <a href="{{ url('/patient') }}">{{ __('views.welcome.admin') }}</a></li>
-              @elseif(auth()->user()->usertype == 'Doctor')
-              <li>  <a href="{{ url('/doctor') }}">{{ __('views.welcome.admin') }}</a></li>
-              @endif
-              <li><a href="{{ url('/logout') }}"><span class="glyphicon glyphicon-log-out"></span>{{ __('views.welcome.logout') }}</a></li>
-          @endif
-      @endif
-      
-    </ul>
-  </div>
-</nav>
-@endsection
-@section('content')
-
-        
+@section('content')        
 <div class="container">
-  <div class="row">
-      <div class="col-xs-12" >
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-  
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="img/bg-img/bg1.jpg" alt="Los Angeles" width="1800px" height="800px">
-        </div>
-  
-        <div class="item">
-          <img src="img/bg-img/bg3.jpg" alt="Chicago" width="1800px" height="800px">
-        </div>
-      
-        <div class="item">
-          <img src="img/bg-img/bg2.jpg" alt="kiribathgoda" width="1800px" height="800px">
-        </div>
-      </div>
-  
-      <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
-      </a>
+    <div class="welcome">
+        <h1>
+            Welcome to Artificial Limb Care (pvt) LTD.
+        </h1>
     </div>
-  </div></div>
-        </div>
-<br>
-.
-<div class="container">
-    <div class="col-xs-12 col-sm-12  col-lg-4">
-        <div class="panel panel-info ">
-            <div class="panel-heading " >
-                <h4>Friday close...</h4>
-          <h4>Other days 9am - 5pm</h4>
-            </div>
-      </div>
-     </div> 
-     <div class="col-xs-12 col-sm-12  col-lg-4">
-        <div class="panel panel-info ">
-            <div class="panel-heading " >
-                <h4>Email:-info@artificiallimbcare.lk</h4>
-                <h4> Call Us:-<a href="tel:0713450257">071 345 0257</a> </h4>
-          
-            </div>
-      </div>
-     </div> 
-     <div class="col-xs-12 col-sm-12 col-lg-4">
-        <div class="panel panel-info ">
-            <div class="panel-heading " >
-                <h4>No 4, Mithrananda Mawatha,</h4> 
-                <h4>Kiribathgoda.<br></h4>
-            </div>
-      </div>
-     </div> 
-    </div>
-   <br>
+    <div class="slider" id="main-slider">
+        <div class="slider-wrapper">
+            <img src="img/bg-img/bg1.jpg" alt="First" class="slide" />
+            <img src="img/bg-img/bg2.jpg" alt="Second" class="slide" />
+            <img src="img/bg-img/bg4.jpg" alt="Third" class="slide" />
 
-      <div class="container">
-          <br>
-          <div class="well well-lg"><p style="text-align:center;">
-            <img src="img/icons/Services.png" alt="" width="75px" height="75px"></p>
-            <h2 align="center">Our Services</h2>
-                 
+        </div>
+    </div>
+
+</div>
+<section id="app-feature">
+    <div class="container">
+        <div class="row">
+            <div class="col-4-app">
+                <img src="/img/open.png">
+                <h3 class="app-features">Open hours</h3>
+                <P>Friday close...</P>
+                <P>Other days 9am - 5pm</P>
             </div>
-            <div class="col-xs-6 col-sm-6 col-lg-3">
-              <div class="panel panel-success ">
-                  <div class="panel-heading " >
-                      <p style="text-align:center;"><i class="fa fa-wheelchair fa-3x"  aria-hidden="true"> </i></p>
-                       <h5 align="center">Orthosis care</h5>
-                  </div>
+            <div class="col-4-app">
+                <img src="/img/cont.png">
+                <h3 class="app-features">Contact us</h3>
+                <P>info@artificiallimbcare.lk</P>
+                <a href="tel:+94-71-345-0257" style="text-decoration: none ;"><P> 071 345 0257</P></a>
+                <a href="tel:+94-11-581-0059" style="text-decoration: none ;"><P> 011 581 0059</P></a>
             </div>
-           </div> 
-           <div class="col-xs-6 col-sm-6 col-lg-3">
-              
-              <div class="panel panel-success ">
-                  <div class="panel-heading " > 
-                      <p style="text-align:center;"> <i class="fa fa-child fa-3x"  aria-hidden="true"> </i></p>
-                   <h5 align="center">Children care</h5></div>
-              </div>
-            
-          </div> 
-           <div class="col-xs-6 col-sm-6 col-lg-3">
-                <div class="panel panel-success ">
-                    <div class="panel-heading " > 
-                        <p style="text-align:center;"><i class="fa fa-blind fa-3x"  aria-hidden="true"> </i></p>
-                        <h5 align="center">Prosthesis care</h5>
-                      </div>
+            <div class="col-4-app">
+                <a href="https://goo.gl/maps/iM2m3LKjAFJnbXs9A" style="text-decoration: none ;"><img src="/img/location.png">
+                <h3 class="app-features">Location</h3>
+                <P>No 4, Mithrananda Mawatha,</P>
+                <P> Kiribathgoda.</P></a>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="service">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="row">
+            <a href="/services/orthosishome">
+                <div class="col-6-service">
+                    {{-- <img src="https://previews.123rf.com/images/ylivdesign/ylivdesign1702/ylivdesign170206829/72502064-prosthesis-hand-icon-simple-style.jpg"> --}}
+                    
+                    <h3 class="service-name">Orthosis care</h3>
                 </div>
-            </div> 
-            <div class="col-xs-6 col-sm-6 col-lg-3">
-              
-                  <div class="panel panel-success ">
-                      <div class="panel-heading " > 
-                          <p style="text-align:center;"><i class="fa fa-hand-paper-o  fa-3x"  aria-hidden="true"> </i></p>
-                          <h5 align="center">Cosmetic  care</h5></div>
-                  </div>
-                
-              </div> 
-             
-                
-              </div>
-                
-                <div class="container">
-                    <div class="panel panel-danger">
+            </a>
 
-                        {{-- <div class="panel-body"><p style="text-align:center;"><img src="img/core-img/artificial.png" class="center" width="800" height="420"></p></div> --}}
-                        <div class="panel-heading"> <div class="col-12 col-lg-5">|| Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved  by ALC(pvt) Ltd.<br></div>
-                        <div  align="right"> Web Design by<a href="https://pjtechnologyzone.com" target="_blank">PJ technology zone</a></div>
-                    </div>
-                  </div></div>
+            <a href="/services/childrenhome">
+                <div class="col-6-service">
+                    {{-- <img src="https://previews.123rf.com/images/ylivdesign/ylivdesign1702/ylivdesign170206829/72502064-prosthesis-hand-icon-simple-style.jpg"> --}}
+                    <h3 class="service-name">Children care</h3>
+                </div>
+            </a>
+
+            <a href="/services/prosthesishome ">
+                <div class="col-6-service">
+                    {{-- <img src="https://previews.123rf.com/images/ylivdesign/ylivdesign1702/ylivdesign170206829/72502064-prosthesis-hand-icon-simple-style.jpg"> --}}
+                    <h3 class="service-name">Prostheses care</h3>
+                </div>
+            </a>
+
+            <a href="/services/cosmetichome ">
+                <div class="col-6-service">
+                    {{-- <img src="https://previews.123rf.com/images/ylivdesign/ylivdesign1702/ylivdesign170206829/72502064-prosthesis-hand-icon-simple-style.jpg"> --}}
+                    <h3 class="service-name">Cosmetic care</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
      
   @endsection

@@ -116,8 +116,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('employees/{employee}/edit', 'EmployeeController@edit')->name('employees.edit');
     Route::put('employees/{employee}', 'EmployeeController@update')->name('employees.update');
     // Route::delete('employees/delete', 'EmployeeController@delete')->name('employees.delete');
-    Route::delete('employees/{employee}/delete', 'EmployeeController@destroy')->name('employees.delete');
-    
+    Route::post('employees/{employee}/delete', 'EmployeeController@deleteopen')->name('employees.delete');
+    Route::post('employees/{employee}/deleteemployee', 'EmployeeController@destroy');
+        
 
     //Appointment
     Route::get('appointments', 'AppointmentController@index')->name('appointments');
@@ -226,7 +227,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('patient/{patient}', 'PatientController@show')->name('patient.show');
     Route::get('patient/{patient}/edit', 'PatientController@edit')->name('patient.edit');
     Route::put('patient/{employee}', 'PatientController@update')->name('patient.update');
-    Route::delete('patient/{patient}/delete', 'PatientController@destroy')->name('patient.delete');
+    Route::post('patient/{patient}/delete', 'PatientController@patientdelete')->name('patient.delete');
+    Route::post('patient/{patient}/deletepatient', 'PatientController@destroy');
     Route::post('patient/patient','PatientController@store');
 
     Route::post('patient/{patient}/editpat','PatientController@update');

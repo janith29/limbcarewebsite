@@ -1,6 +1,7 @@
 @extends('admin.layouts.admin')
-@section('content')    
-    <div id="myModal" class="modal fade in" style="display: block; margin-top: 160px; margin-left: 100px;">
+@section('content')   
+
+    <div id="myModal" class="modal fade in" style="display:  inline-block; margin-top: 160px; ">
         <div class="modal-dialog modal-confirm">
             <div class="modal-content">
                 <div class="modal-header">

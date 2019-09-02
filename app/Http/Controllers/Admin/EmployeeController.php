@@ -243,7 +243,10 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employees')->with('message', $message);
     }
-
+    public function deleteopen(Employee $employee)//Employee $employee
+    { 
+        return view('admin.employees.delete',['employee' => $employee]);
+    }
     public function gotoReport() {
         return view('admin.employees.report');
     }

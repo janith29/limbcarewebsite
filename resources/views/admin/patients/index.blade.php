@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="dcard-body text-center">
-                        {!! Form::open(array('route' => ['admin.patient.delete', $patient->id], 'method' => 'DELETE')) !!}
+                        {!! Form::open(array('route' => ['admin.patient.delete', $patient->id], 'method' => 'POST')) !!}
                         <a href="{{ route('admin.patient.show', [$patient->id]) }}" class="btn btn-primary">View</a>
                         <br/>
                         <a href="{{ route('admin.patient.edit', [$patient->id]) }}" class="btn btn-success">Update</a>

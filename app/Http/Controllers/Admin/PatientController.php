@@ -214,8 +214,13 @@ class PatientController extends Controller
         return redirect()->route('admin.patients')->with('message', $message);
 
     }
+    public function patientdelete(Patient $patient)
+    {
+       
+        return view('admin.patients.delete',['patient' => $patient]);
 
-
+    }
+    
 
     public function displayReport(Request $request)
     {

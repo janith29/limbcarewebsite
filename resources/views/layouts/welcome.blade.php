@@ -1,271 +1,169 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-    <head>
-            <title>Artificial limb care (Pvt) Ltd</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <!-- Meta title & meta -->
-    @meta
+<head>
+    <!-- Requird meta tages -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- Styles -->
-        <style>
-             
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+    <title>Artificial limb care </title>
 
-            .full-height {
-                height: 100vh;
-            }
+    <!-- Font -->
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .top-left {
-                position: absolute;
-                left: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .footer {
-                position:fixed;
-                width:100%;
-                height:20px;
-                padding:5px;
-                bottom:0px;
-                font-size: smaller;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-            .imgdis {
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        body {font-family: Arial, Helvetica, sans-serif;}
-        .imgdis:hover {opacity: 0.7;}
-        
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-        }
-        
-        /* Modal Content (image) */
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-        
-        /* Caption of Modal Image */
-        #caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
-        }
-        
-        /* Add Animation */
-        .modal-content, #caption {    
-            -webkit-animation-name: zoom;
-            -webkit-animation-duration: 0.6s;
-            animation-name: zoom;
-            animation-duration: 0.6s;
-        }
-        
-        @-webkit-keyframes zoom {
-            from {-webkit-transform:scale(0)} 
-            to {-webkit-transform:scale(1)}
-        }
-        
-        @keyframes zoom {
-            from {transform:scale(0)} 
-            to {transform:scale(1)}
-        }
-        
-        /* The Close Button */
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        /* 100% Image Width on Smaller Screens */
-        @media only screen and (max-width: 700px){
-            .modal-content {
-                width: 100%;
-            }
-        }
-        .simpleslide100 {
-  display: block;
-  position: fixed;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.simpleslide100-item {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-.columnd {
-  float: left;
-  width: 33.33%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
-}
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-        </style>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="{{asset('js/app.js')}}"></script>
-<!-- Laravel variables for js -->
-        @tojs
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script> -->
+</head>
     </head>
     <body>
-            {{-- <div class="simpleslide100">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                          <li data-target="#myCarousel" data-slide-to="1"></li>
-                          <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-                    
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                          <div class="item active">
-                            <img src="img/bg-img/bg1.jpg" alt="Los Angeles" width="1800px" height="1800px">
-                          </div>
-                    
-                          <div class="item">
-                            <img src="img/bg-img/bg3.jpg" alt="Chicago" width="1800px" height="1800px">
-                          </div>
-                        
-                          <div class="item">
-                            <img src="img/bg-img/bg4.jpg" alt="New york" width="1800px" height="1800px">
-                          </div>
+    <main class="home">
+            <div id="navbar">
+                    <div class="logo">
+                        <a class="alightLeft  " href="/"> <img class="logo" src="/img/artificial.png" alt=""></a>
+                    </div>
+                    <div class="aliment">
+                        <a class="alightLeft @if (Request::is('/') ) active @endif" href="/">Home</a>
+                        <a class="alightLeft  @if (Request::is('aboutus') ) active @endif" href="/aboutus">About us</a>
+                        <a class="alightLeft @if (Request::is('services/*')|| Request::is('services') ) active @endif" href="/services">Services</a>
+                        <a class="alightLeft @if (Request::is('contact') ) active @endif" href="/contact">Contact us</a>
+
+          @if (Route::has('login'))
+          @if (!Auth::check())
+                        <a class="alightRight @if (Request::is('login') ) active @endif" href="/login">Login</a>
+                        @else
+                        @if(auth()->user()->usertype == 'administrator')
+                        <a class="alightRight" href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Receptionist')
+                        <a class="alightRight" href="{{ url('/receptionist') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'PNO')
+                        <a class="alightRight" href="{{ url('/pno') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Director')
+                        <a class="alightRight" href="{{ url('/director') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Patient')
+                        <a class="alightRight" href="{{ url('/patient') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Doctor')
+                        <a class="alightRight" href="{{ url('/doctor') }}">{{ __('views.welcome.admin') }}</a>
+                        @endif
+                        <a class="alightRight" href="{{ url('/admin') }}">{{ __('views.welcome.logout') }}</a>
+                        @endif
+                        @endif
+                    </div>
+        
+                </div>
+                <div class="topnav">
+                    <div class="logomoile">
+                        <a class="alightLeft  cricale" href="/">
+                            <img class="logo" src="/img/artificial.png" alt=""></a>
+                    </div>
+                    <div id="myLinks">
+        
+                        <a class="@if (Request::is('/') ) active @endif" href="/">Home</a>
+                        <a class="@if (Request::is('aboutus') ) active @endif" href="/aboutus">About us</a>
+                        <a class="@if (Request::is('services/*')|| Request::is('services') ) active @endif" href="/services">Services</a>
+                        <a class="@if (Request::is('contact') ) active @endif" href="/contact">Contact us</a>
+
+          @if (Route::has('login'))
+          @if (!Auth::check())
+
+          <a class="@if (Request::is('login') ) active @endif" href="/login">Login</a>
+                        @else
+                        @if(auth()->user()->usertype == 'administrator')
+                        <a  href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Receptionist')
+                        <a  href="{{ url('/receptionist') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'PNO')
+                        <a  href="{{ url('/pno') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Director')
+                        <a href="{{ url('/director') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Patient')
+                        <a href="{{ url('/patient') }}">{{ __('views.welcome.admin') }}</a>
+                        @elseif(auth()->user()->usertype == 'Doctor')
+                        <a href="{{ url('/doctor') }}">{{ __('views.welcome.admin') }}</a>
+                        @endif
+                        <a  href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a>
+                        @endif
+                        @endif
+                    </div>
+                    <a href="javascript:void(0);" class="icon" onclick="moblilenav()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+                <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+                 @yield('content')
+                 <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4-foot foot-image">
+            
+                                    <a href="/">
+                                        <img src="/img/art.png" class="footer-logo">
+                                    </a>
+                                </div>
+                                <div class="col-4-foot quick-foot sm-col-4-foot">
+                                    <h3>Quick Links</h3>
+                                    <p>
+                                        <ul>
+                                            <li>
+                                                <a href="/">Home</a>
+                                            </li>
+                                            <li>
+                                                <a href="aboutus">About us</a>
+                                            </li>
+                                            <li>
+                                                <a href="services">Service</a>
+                                            </li>
+                                            <li>
+                                                <a href="contact">Contact</a>
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                                <div class="col-4-foot sm-col-4-foot ">
+            
+                                    <h3>Follow us on</h3>
+            
+                                    <div id="social-media-footer">
+                                        <ul>
+                                            <li>
+                                                <a href="https://www.facebook.com/artificiallimbcareSL/" target="_blank">
+                                                    <i class="fab fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.youtube.com/channel/UCVUmHjfhaKNupmanL1xrgCw" target="_blank">
+                                                    <i class="fab fa-youtube"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    
-                        <!-- Left and right controls -->
-                       
-                       
-                      </div>   </div> --}}
-        <div style="background-image: url(https://i.pinimg.com/originals/08/fa/02/08fa0275674fee050c47e3b1abd86b6b.jpg); background-repeat: repeat;  ">
-        @yield('navigation')
-        @yield('content')
-        </div>
-        <script>
-        $('.simpleslide100').each(function(){
-        var delay = 7000;
-        var speed = 1000;
-        var itemSlide = $(this).find('.simpleslide100-item');
-        var nowSlide = 0;
+                    </footer>
+            
+                    <section class="copyright">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-8-copy">
+                                    <div class="copy">
+                                        <p>|| Copyright ©2019 All rights reserved by ALC(pvt) Ltd.</p>
+                                    </div>
+                                </div>
+                                <div class="col-4-copy">
+                                    <div class="design">
+                                        Web Design by <a href="https://pjtechnologyzone.com" target="_blank">PJtechnology zone</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+    </main>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/main.js"></script>
 
-        $(itemSlide).hide();
-        $(itemSlide[nowSlide]).show();
-        nowSlide++;
-        if(nowSlide >= itemSlide.length) {nowSlide = 0;}
+</body>
 
-        setInterval(function(){
-            $(itemSlide).fadeOut(speed);
-            $(itemSlide[nowSlide]).fadeIn(speed);
-            nowSlide++;
-            if(nowSlide >= itemSlide.length) {nowSlide = 0;}
-        },delay);
-    });
-    </script>
-    </body>
 </html>

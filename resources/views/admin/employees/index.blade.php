@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="dcard-body text-center">
-                            {!! Form::open(array('route' => ['admin.employees.delete', $employee->id], 'method' => 'DELETE')) !!}
+                            {!! Form::open(array('route' => ['admin.employees.delete', $employee->id], 'method' => 'POST')) !!}
                             <a href="{{ route('admin.employees.show', [$employee->id]) }}" class="btn btn-primary">View</a>
                             <br/>
                            
